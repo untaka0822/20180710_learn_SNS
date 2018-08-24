@@ -1,6 +1,14 @@
 <?php
   session_start();
   require('dbconnect.php');
+
+  // ログインしていない状態でアクセスされたときにログインするようheader関数でsignin.phpに飛ばす
+  // $_SESSION['id']がセットされていないとき
+  if (!isset($_SESSION['id'])) {
+      header("Location: signin.php");
+      exit;
+  }
+
   //ログインユーザー情報の取得
   $sql = 'SELECT * FROM `users` WHERE `id`=?';
   $data = array($_SESSION["id"]);
@@ -111,12 +119,14 @@
             </div>
             <div class="row feed_sub">
               <div class="col-xs-12">
-                <form method="POST" action="" style="display: inline;">
-                  <input type="hidden" name="feed_id" >
-                    <input type="hidden" name="like" value="like">
-                    <button type="submit" class="btn btn-default btn-xs"><i class="fa fa-thumbs-up" aria-hidden="true"></i>いいね！</button>
-                </form>
-                <span class="like_count">いいね数 : 100</span>
+              <!-- いいね処理 -->
+                <span hidden class="feed-id"><?= $feed["id"] ?></span>
+                <button class="btn btn-default btn-xs js-like">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    <span>いいね!</span>
+                </button>
+                <span>いいね数 : </span>
+                <span class="like_count">100</span>
                 <span class="comment_count">コメント数 : 9</span>
                 <?php if($_SESSION['id'] == $feed['user_id']) { ?>
                   <a href="edit.php?feed_id=<?php echo $feed['id']; ?>" class="btn btn-success btn-xs">編集</a>
@@ -147,5 +157,14 @@
   <script src="assets/js/jquery-3.1.1.js"></script>
   <script src="assets/js/jquery-migrate-1.4.1.js"></script>
   <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/app.js"></script> <!-- 追加 -->
 </body>
 </html>
+
+
+
+
+
+
+
+

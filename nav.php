@@ -22,6 +22,7 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
+            <span hidden id="signin-user"><?php echo $login_user['id']; ?></span>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="<?php echo 'user_profile_img/' . $login_user['img_name']; ?>" width="18" class="img-circle"><?php echo $login_user['name']; ?><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">マイページ</a></li>
